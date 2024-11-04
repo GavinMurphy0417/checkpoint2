@@ -35,6 +35,8 @@ function Clickdiamond() {
 
   Diamonds += 1
   console.log('Diamond Click', Diamonds)
+  // TODO apply all of my click upgrades to my resource (Diamonds)
+  // reference calculateSootheAmount OR calculateCartTotal for this
   drawDiamonds()
 }
 
@@ -46,7 +48,7 @@ function drawDiamonds() {
 
 }
 
-
+// TODO make the price of the upgrade increase, make sure to draw the new prcie to the document as well, so you will probably need to update your draw stats functions
 
 function purchaseshovel() {
   const Foundclickupgrade = clickUpgrades.find(diamonditem => diamonditem.name == "Shovel")
@@ -94,6 +96,7 @@ function purchaseminer() {
   Founddiamonditem.quantity++
 
   drawDiamonds()
+  // FIXME write a function that draws stats for auto upgrades, call that function here instead of click stats
   drawclickupgradesstats()
 
 }
@@ -109,6 +112,7 @@ function purchasegoldenapple() {
   Founddiamonditem.quantity++
 
   drawDiamonds()
+  // FIXME write a function that draws stats for auto upgrades, call that function here instead of click stats
   drawclickupgradesstats()
 }
 
@@ -122,6 +126,12 @@ function drawclickupgradesstats() {
   }
 }
 
+// TODO write a function that draws the stats for your total bonus for your auto/click upgrades. You might be able to re-use one of your calculate functions for this. Call these functions whenever someone purchases and upgrade
+
+
+// TODO write a function that totals up my automaticUpgrades (reference calculateSootheAmount OR calculateCartTotal) and applies that total to my Diamonds
+
+// TODO call this function every 3 seconds (reference my setInterval from zoo keeper)
 
 
 
