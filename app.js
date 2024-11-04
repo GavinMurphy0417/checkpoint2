@@ -6,7 +6,7 @@ let clickUpgrades = [
     name: 'Shovel',
     price: 50,
     quantity: 0,
-    bonus: 2
+    bonus: 1
   },
   {
     name: 'Pickaxe',
@@ -90,8 +90,6 @@ function purchaseminer() {
 
     return
   }
-
-  console.log('purchasing', Founddiamonditem)
   Diamonds -= Founddiamonditem.price
   Founddiamonditem.quantity++
 
@@ -123,9 +121,6 @@ function drawclickupgradesstats() {
 
   }
 }
-
-
-setInterval()
 
 
 
