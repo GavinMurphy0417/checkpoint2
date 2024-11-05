@@ -19,13 +19,13 @@ let automaticUpgrades = [
   {
     name: 'Miner',
     price: 500,
-    quantity: 1,
+    quantity: 0,
     bonus: 10
   },
   {
     name: 'Golden-Apple',
     price: 1000,
-    quantity: 1,
+    quantity: 0,
     bonus: 50
 
   }
@@ -35,16 +35,22 @@ function Clickdiamond() {
 
   Diamonds += 1
   console.log('Diamond Click', Diamonds)
-  // TODO apply all of my click upgrades to my resource (Diamonds)
-  // reference calculateSootheAmount OR calculateCartTotal for this
+  let totalbonusamount = clickupgradebonus()
+  Diamonds += totalbonusamount
+  drawDiamonds()
+
+}
+function AutoDiamonds() {
+
+  let totalAutobonusamount = autoUpgradesbonus()
+  Diamonds += totalAutobonusamount
   drawDiamonds()
 }
-
-
 
 function drawDiamonds() {
   const DiamondsElem = document.getElementById('Diamonds')
   DiamondsElem.innerText = Diamonds.toString()
+
 
 }
 
@@ -64,20 +70,19 @@ function purchaseshovel() {
   drawDiamonds()
   drawclickupgradesstats()
 
-
 }
 
 function purchasepickaxe() {
-  const Founddiamonditem = clickUpgrades.find(diamonditem => diamonditem.name == "Pickaxe")
-  if (Diamonds < Founddiamonditem.price) {
+  const Foundclickupgrade = clickUpgrades.find(clickUpgrades => clickUpgrades.name == "Pickaxe")
+  if (Diamonds < Foundclickupgrade.price) {
     window.alert('you cannot afford Pickaxe')
 
     return
   }
 
-  console.log('purchasing', Founddiamonditem)
-  Diamonds -= Founddiamonditem.price
-  Founddiamonditem.quantity++
+  console.log('purchasing', Foundclickupgrade)
+  Diamonds -= Foundclickupgrade.price
+  Foundclickupgrade.quantity++
 
 
   drawDiamonds()
@@ -86,19 +91,16 @@ function purchasepickaxe() {
 }
 
 function purchaseminer() {
-  const Founddiamonditem = automaticUpgrades.find(diamonditem => diamonditem.name == "Miner")
-  if (Diamonds < Founddiamonditem.price) {
+  const FoundAutomaticUpgrades = automaticUpgrades.find(automaticUpgrades => automaticUpgrades.name == "Miner")
+  if (Diamonds < FoundAutomaticUpgrades.price) {
     window.alert('you cannot afford Miner')
-
     return
   }
-  Diamonds -= Founddiamonditem.price
-  Founddiamonditem.quantity++
+  Diamonds -= FoundAutomaticUpgrades.price
+  FoundAutomaticUpgrades.quantity++
 
   drawDiamonds()
-  // FIXME write a function that draws stats for auto upgrades, call that function here instead of click stats
-  drawclickupgradesstats()
-
+  drawautomaticupgradesstats()
 }
 
 function purchasegoldenapple() {
@@ -107,13 +109,12 @@ function purchasegoldenapple() {
     window.alert('you cannot afford Golden-Apple')
     return
   }
-  console.log('purchasing', Founddiamonditem)
   Diamonds -= Founddiamonditem.price
   Founddiamonditem.quantity++
 
   drawDiamonds()
-  // FIXME write a function that draws stats for auto upgrades, call that function here instead of click stats
-  drawclickupgradesstats()
+  drawautomaticupgradesstats()
+
 }
 
 function drawclickupgradesstats() {
@@ -126,17 +127,58 @@ function drawclickupgradesstats() {
   }
 }
 
+function drawautomaticupgradesstats() {
+  for (let i = 0; i < automaticUpgrades.length; i++) {
+    const automaticUpgrade = automaticUpgrades[i];
+    const automaticUpgradeElem = document.getElementById(automaticUpgrade.name)
+    const spanElem = automaticUpgradeElem.querySelector('span')
+    spanElem.innerText = automaticUpgrade.quantity.toString()
+  }
+
+}
+
+
+
+
+function clickupgradebonus() {
+  let totalbonusamount = 0
+
+  for (let i = 0; i < clickUpgrades.length; i++) {
+    const clickUpgrade = clickUpgrades[i];
+    totalbonusamount += clickUpgrade.bonus * clickUpgrade.quantity
+    console.log(clickUpgrade.bonus * clickUpgrade.quantity)
+
+  }
+
+  return totalbonusamount
+
+}
+
+function autoUpgradesbonus() {
+  let totalAutobonusamount = 0
+
+  for (let i = 0; i < automaticUpgrades.length; i++) {
+    const automaticUpgrade = automaticUpgrades[i];
+    totalAutobonusamount += automaticUpgrade.bonus * automaticUpgrade.quantity
+    totalAutobonusamount
+    console.log(automaticUpgrade.bonus * automaticUpgrade.quantity)
+
+  }
+
+
+  return totalAutobonusamount
+
+}
+
+
 // TODO write a function that draws the stats for your total bonus for your auto/click upgrades. You might be able to re-use one of your calculate functions for this. Call these functions whenever someone purchases and upgrade
 
-
+drawautomaticupgradesstats()
 // TODO write a function that totals up my automaticUpgrades (reference calculateSootheAmount OR calculateCartTotal) and applies that total to my Diamonds
 
 // TODO call this function every 3 seconds (reference my setInterval from zoo keeper)
 
-
-
-
-
+setInterval(AutoDiamonds, 3000)
 
 
 
